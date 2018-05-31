@@ -1,6 +1,6 @@
 # The Co-Evolution Model for Social Network Evolving and Opinion Migration
 
-Implementation of the paper [**RaRE: Social Rank Regulated Large-scale Network Embedding](http://yupenggu.me/papers/WWW18_RaRE.pdf)
+Implementation of the paper [*RaRE: Social Rank Regulated Large-scale Network Embedding*](http://yupenggu.me/papers/WWW18_RaRE.pdf)
 
 ##### Usage: 
 
@@ -34,7 +34,7 @@ to show the help command below.
 - -verbose: whether see verbose output or not (0: show limited outputs; other: show all outputs); 1 by default
 - -h or -help: show this help command
 
-The -data command is necessary.
+The -data argument is necessary.
 
 ### Citation:
 ```

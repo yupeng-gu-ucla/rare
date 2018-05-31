@@ -15,31 +15,25 @@ public class Main {
   public static int N, E, K = 4;
   public static double sgdStepSize = 0.01;    // may be different for different data
   public static final int negDictSize = 100000000;  // 100M
-  //public static String posFilename = "../../data/venue/Citations_weight.txt";	// u1
   public static String posFilename;
 
   public static double paramA = 1.0, paramB = 2.0, paramC = -1.0;
-  public static double rAlpha = 1.5;		// param for power law prior (r); recommended value: 1~2
-  public static double rLimit = 10;		// truncated at rLimit
+  public static double rAlpha = 1.5;
+  public static double rLimit = 10;
   public static boolean WEIGHTED = false;
   public static double thetaReg = 1e-6;
   public static double tolerance = 1e-6;
-
   public static int MAX_EDGES = (int)1e8;
   public static boolean verbose = true;
-
-  public static double nsw;	    // negative sample weight
-  public static Random rand;
-
+  public static double tp = 0.9;
+  public static final int shuffleSeed = 42;
   public static String outPrefix = "./";
 
+  public static double nsw;
+  public static Random rand;
 
   public static String outFilenameR, outFilenameTheta, outFilename1DTheta;
-
   public static List<Integer> edgeSources, edgeTargets, weights;
-  public static double tp = 0.9;		// training fraction
-  public static final int shuffleSeed = 42;
-
   public static List<Boolean> isRecip;
   public static Map<String, Integer> map;
   public static Map<Integer, String> invMap;

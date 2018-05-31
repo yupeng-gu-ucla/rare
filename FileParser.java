@@ -63,18 +63,6 @@ public class FileParser {
 	    if (_k <= 0) throw new NumberFormatException();
 	    Main.K = _k;
 	    break;
-	  /*
-	  case "gammaK":
-	    double _gk = Double.parseDouble(y);
-	    if (_gk < 0) throw new NumberFormatException();
-	    Main.gammaK = _gk;
-	    break;
-	  case "gammaTheta":
-	    double _gt = Double.parseDouble(y);
-	    if (_gt < 0) throw new NumberFormatException();
-	    Main.gammaTheta = _gt;
-	    break;
-	  */
 	  case "thetaReg":
 	    double _tr = Double.parseDouble(y);
 	    if (_tr < 0 || _tr >= 1) throw new NumberFormatException();
@@ -114,7 +102,8 @@ public class FileParser {
 	String[] tokens = currentLine.split("\t");
 	String x = tokens[0];
 	String y = tokens[1];
-	if (x == "" || y == "") {System.out.println("hi"); continue;}
+	if (x == "" || y == "") 
+	    continue;
 	if (!map.containsKey(x)) {
 	  map.put(x, newID); newID += 1;
 	}
@@ -142,7 +131,7 @@ public class FileParser {
    */
   public static int readCSVGraphApprox(
       String filename, Map<String, Integer> map, 
-      List<Integer> edgeSources, List<Integer> edgeTargets, List<Integer> weights, List<Boolean> isRecip,
+      List<Integer> edgeSources, List<Integer> edgeTargets, List<Integer> weights,
       int N, int[] negDict, Map<Integer, Integer> outDegree, boolean WEIGHTED
   ) throws FileNotFoundException, IOException {
     Map<Integer, Integer> inDegree = new HashMap<Integer, Integer>();	    // in-degree of every node
@@ -237,7 +226,7 @@ public class FileParser {
    */
   public static int readCSVGraph(
       String filename, Map<String, Integer> map, 
-      List<Integer> edgeSources, List<Integer> edgeTargets, List<Integer> weights, List<Boolean> isRecip,
+      List<Integer> edgeSources, List<Integer> edgeTargets, List<Integer> weights,
       int N, int[] negDict, Map<Integer, Integer> outDegree, boolean WEIGHTED
   ) throws FileNotFoundException, IOException {
     Map<Integer, Integer> inDegree = new HashMap<Integer, Integer>();	    // in-degree of every node
@@ -269,53 +258,9 @@ public class FileParser {
 	outDegree.put(x, outDegree.get(x)+w);
 	inDegree.put(y, inDegree.get(y)+w);
 
-	/*
-	// detect repcpricated links: delete for efficiency?
-	long key = x * N + y;
-	if (pairMap.containsKey(key)) {
-	  List<Integer> tmp = pairMap.get(key);
-	  tmp.add(count); pairMap.put(key, tmp);
-	} else {
-	  List<Integer> tmp = new ArrayList<Integer>();
-	  tmp.add(count); pairMap.put(key, tmp);
-	}
-
-	long revKey = y * N + x;
-	if (secondPairMap.contains(revKey)) {
-	  isRecip.add(true);
-	  count++;
-	  continue;
-	}
-
-	if (pairMap.containsKey(revKey)) {
-	  secondPairMap.add(key);
-	  secondPairMap.add(revKey);
-
-	  isRecip.add(true);
-	  List<Integer> revIndexes = pairMap.get(revKey);
-	  for (int revIndex: revIndexes) 
-	    isRecip.set(revIndex, true);
-	} else {
-	  isRecip.add(false);
-	}
-	*/
-
 	count++;
       }
     } finally { br.close(); }
-
-    /*
-    // write reciprocated links to file
-    String recFileName = "./recip.txt";
-    if (Main.verbose) System.out.println("[Info] Output recriprocated info to " + recFileName);
-    try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(recFileName)))) {
-      for (boolean b: isRecip) {
-	writer.printf("%b\n", b);
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    */
 
     // build negative samples dictionary
     if (Main.verbose) System.out.println("[Info] Building negative sample dictionary");
@@ -355,12 +300,10 @@ public class FileParser {
       nol++;
       outDegree.put(i, repeat);
     }
-    //System.out.println("nol = " + nol);
     //*/
 
     // build negative links
     for (int e = 0; e < count; e++) {
-      //int i = rand.nextInt(N);
       int i = edgeSources.get(e);
       int w = weights.get(e);
       while (true) {
