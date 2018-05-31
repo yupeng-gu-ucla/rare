@@ -5,6 +5,7 @@ Implementation of the paper [*RaRE: Social Rank Regulated Large-scale Network Em
 ##### Usage: 
 
 ```
+javac *.java
 java Main <options>
 ```
 
