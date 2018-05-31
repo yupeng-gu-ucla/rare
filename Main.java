@@ -34,7 +34,6 @@ public class Main {
 
   public static String outFilenameR, outFilenameTheta, outFilename1DTheta;
   public static List<Integer> edgeSources, edgeTargets, weights;
-  public static List<Boolean> isRecip;
   public static Map<String, Integer> map;
   public static Map<Integer, String> invMap;
   public static int[] negDict = new int[negDictSize];
@@ -48,7 +47,6 @@ public class Main {
     edgeTargets = new ArrayList<Integer>();
     weights = new ArrayList<Integer>();
     outDegree = new HashMap<Integer, Integer>();
-    isRecip = new ArrayList<Boolean>();
     outFilenameR = outPrefix + "/res_r.txt";
     outFilenameTheta = outPrefix + "/res_z.txt";
     outFilename1DTheta = outPrefix + "/res_theta.txt";
@@ -57,10 +55,10 @@ public class Main {
     try {
       N = FileParser.readCSVDict(posFilename, "", map, invMap);
 
-      E = FileParser.readCSVGraph(posFilename, map, edgeSources, edgeTargets, weights, isRecip, N, negDict, outDegree, WEIGHTED);
+      E = FileParser.readCSVGraph(posFilename, map, edgeSources, edgeTargets, weights, N, negDict, outDegree, WEIGHTED);
 
       // use readCSVGraphApprox when there are too many edges (i.e. E > 100M)
-      //E = FileParser.readCSVGraphApprox(posFilename, map, edgeSources, edgeTargets, weights, isRecip, N, negDict, outDegree, WEIGHTED);
+      //E = FileParser.readCSVGraphApprox(posFilename, map, edgeSources, edgeTargets, weights, N, negDict, outDegree, WEIGHTED);
 
       nsw = 5;
     } catch (IOException e) {
@@ -489,26 +487,6 @@ public class Main {
 
 
   public static void main(String[] args) {
-  /*
-    switch (args.length) {
-      case 1:	    // java Main <config_file>
-	FileParser.readConfig(args[0]);
-	break;
-      case 4:	    // java Main <K> <dirR> <dirZ> <dirTheta>
-	K = Integer.parseInt(args[0]);
-	outFilenameR = args[1];
-	outFilenameTheta = args[2];
-	outFilename1DTheta = args[3];
-	System.out.printf("[Info] Output to %s and %s\n", outFilenameR, outFilenameTheta);
-	break;
-      default:
-	outFilenameR = "./res_r.txt";
-	outFilenameTheta = "./res_z.txt";
-	outFilename1DTheta = "./res_theta.txt";
-	break;
-    }
-    */
-
     try {
       ArgumentParser.parse(args);
     } catch (NumberFormatException e) {
@@ -517,9 +495,6 @@ public class Main {
       ArgumentParser.help();
       System.exit(0);
     }
-
-    //System.out.printf("Parameters: %s\n%s\n%s\n", outFilenameR, outFilenameTheta, outFilename1DTheta);
-    //System.out.printf("%f, %f, %f\n%f\n%d\n", paramA, paramB, paramC, thetaReg, K);
 
     long _start = System.currentTimeMillis();
     start(args);
